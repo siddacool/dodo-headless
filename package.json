@@ -64,7 +64,7 @@
   },
   "volta": {
     "node": "22.13.1",
-    "pnpm": "9.15.4"
+    "pnpm": "10.0.0"
   },
   "dependencies": {
     "dayjs": "^1.11.13",
