@@ -23,3 +23,5 @@ vite.config.ts.timestamp-*
 *storybook.log
 
 .netlify
+
+storybook-static
