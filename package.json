@@ -1,8 +1,7 @@
 {
-  "name": "dodo-headless",
+  "name": "@dodo-framework/dodo-headless",
   "version": "0.0.1",
   "scripts": {
-    "dev": "vite dev",
     "build": "vite build && npm run prepack",
     "preview": "vite preview",
     "prepack": "svelte-kit sync && svelte-package && publint",
@@ -10,7 +9,7 @@
     "format": "prettier --write .",
     "check": "pnpm run svelte-check && eslint . && pnpm run lint",
     "check:fix": "pnpm run svelte-check && eslint . && pnpm run format",
-    "storybook": "storybook dev -p 6006",
+    "dev": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "files": [
