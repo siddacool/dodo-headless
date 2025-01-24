@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Build Storybook
-        run: pnpm run storybook build
+        run: pnpm run build-storybook
 
   deploy_storybook:
     needs: build
