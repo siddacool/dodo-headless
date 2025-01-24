@@ -1,4 +1,5 @@
-name: pnpm Example Workflow
+name: pnpm Example Workflow with Storybook
+
 on:
   push:
 
@@ -21,10 +22,16 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
-      - name: Install Storybook
-      - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+      - name: Build Storybook
+        run: pnpm run storybook build
+
+  deploy_storybook:
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v6
         with:
-          # install_command: yarn install # default: npm ci
-          build_command: pnpm build-storybook # default: npm run build-storybook
-          path: storybook-static # default: dist/storybook
-          checkout: false # default: true
+          branch: gh-pages # Branch to deploy to.
+          folder: storybook-static # Path to public directory.
