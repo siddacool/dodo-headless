@@ -31,7 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v6
+        uses: JamesIves/github-pages-deploy-action@v<latest_version>
         with:
           branch: gh-pages # Branch to deploy to.
           folder: storybook-static # Path to public directory.
