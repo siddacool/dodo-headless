@@ -25,3 +25,5 @@ vite.config.ts.timestamp-*
 .netlify
 
 storybook-static
+
+dist
