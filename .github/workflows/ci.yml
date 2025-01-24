@@ -31,7 +31,7 @@ jobs:
           pnpm run build
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy@v2
+        uses: actions/deploy@v2 # Corrected action usage
         with:
           ref: main
           repo: dodo-headless
