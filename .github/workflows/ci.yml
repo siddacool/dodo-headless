@@ -31,9 +31,8 @@ jobs:
           pnpm run build
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy@v2 # Corrected action usage
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          ref: main
-          repo: dodo-headless
-          branch: gh-pages
-          public: dist
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
