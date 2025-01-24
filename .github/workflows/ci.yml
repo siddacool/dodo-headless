@@ -1,13 +1,11 @@
-name: Vite Build with pnpm 10 and Node.js 22
+name: Vite Build and Deploy with pnpm 10 and Node.js 22
 
 on:
   push:
     branches: ['main']
-  pull_request:
-    branches: ['main']
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     strategy:
@@ -32,8 +30,10 @@ jobs:
         run: |
           pnpm run build
 
-      - name: Upload Artifacts (Optional)
-        uses: actions/upload-artifact@v3
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy@v2
         with:
-          name: dist
-          path: dist
+          ref: main
+          repo: dodo-headless
+          branch: gh-pages
+          public: dist
