@@ -31,10 +31,8 @@ jobs:
           pnpm run build
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy@v2
+        uses: actions/github-pages@v4 # Use the recommended action
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # Important: Use this for deployment
-          ref: main
-          repo: ${{ github.repository }}
-          branch: gh-pages
-          public: dist
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages # Target branch for deployment
+          folder: dist # Directory containing built files
