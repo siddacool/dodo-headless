@@ -1,46 +1,39 @@
-name: CI
+name: Vite Build with pnpm 10 and Node.js 22
 
 on:
   push:
-    branches:
-      - main
+    branches: ['main']
   pull_request:
-    branches:
-      - main
+    branches: ['main']
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    steps:
-      # Step 1: Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v3
+    strategy:
+      matrix:
+        node-version: ['22']
 
-      # Step 2: Set up Node.js
-      - name: Setup Node.js
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # Specify your Node.js version
-          cache: 'pnpm'
+          node-version: ${{ matrix.node-version }}
 
-      # Step 3: Install pnpm explicitly
-      - name: Install pnpm
+      - name: Install Dependencies
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+          run_install: true
+
+      - name: Build
         run: |
-          corepack enable pnpm
-          pnpm --version
+          pnpm run build
 
-      # Step 4: Install dependencies using pnpm
-      - name: Install dependencies
-        run: pnpm install
-
-      # Step 5: Build the project with Vite
-      - name: Build with Vite
-        run: pnpm build
-
-      # Step 6: Upload build artifacts (optional)
-      - name: Upload Build Artifacts
+      - name: Upload Artifacts (Optional)
         uses: actions/upload-artifact@v3
         with:
-          name: build
-          path: dist # Adjust this path based on your Vite output directory
+          name: dist
+          path: dist
