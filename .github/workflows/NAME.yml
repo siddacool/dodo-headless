@@ -1,57 +1,33 @@
-name: Build and Deploy Storybook
+name: pnpm Storybook Deploy
 
 on:
   push:
     branches:
-      - main # Trigger workflow on pushes to the 'main' branch.
+      - main # or your desired branch
 
 jobs:
-  build:
-    name: Build Storybook
-    runs-on: ubuntu-22.04
+  build-storybook:
+    runs-on: ubuntu-latest
     steps:
-      # Step 1: Check out the repository
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Step 2: Set up Node.js and pnpm
-      - name: Set up Node.js and pnpm
+      - uses: actions/checkout@v3
+      - name: Setup pnpm
         uses: pnpm/action-setup@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          version: 10 # Specify the pnpm version
-      - name: Use Node.js 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18 # Use a stable Node.js version compatible with pnpm
-          cache: pnpm
-
-      # Step 3: Install dependencies
+          node-version: 18 # or your desired Node.js version
       - name: Install dependencies
         run: pnpm install
-
-      # Step 4: Build Storybook
       - name: Build Storybook
-        run: pnpm run build-storybook
+        run: pnpm run storybook build
 
-      # Step 5: Upload Storybook build output as an artifact (optional, for debugging)
-      - name: Upload Storybook artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: storybook-build
-          path: storybook-static/
-
-  deploy:
-    name: Deploy Storybook to GitHub Pages
-    needs: build
-    runs-on: ubuntu-22.04
+  deploy-storybook:
+    needs: build-storybook
+    runs-on: ubuntu-latest
     steps:
-      # Step 1: Check out the repository (again)
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Step 2: Deploy Storybook to GitHub Pages
+      - uses: actions/checkout@v3
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: actions/deploy-pages@v1
         with:
-          branch: gh-pages # Deploy to the gh-pages branch
-          folder: storybook-static # Specify the build folder
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          folder: storybook-static # Output directory from build-storybook
