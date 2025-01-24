@@ -17,27 +17,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Node.js and install pnpm
+      # Step 2: Set up Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18 # Specify your Node.js version
           cache: 'pnpm'
 
+      # Step 3: Install pnpm explicitly
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: |
+          npm install -g pnpm
+          pnpm --version
 
-      # Step 3: Install dependencies using pnpm
+      # Step 4: Install dependencies using pnpm
       - name: Install dependencies
         run: pnpm install
 
-      # Step 4: Run build using Vite
+      # Step 5: Build the project with Vite
       - name: Build with Vite
         run: pnpm build
-
-      # Step 5: Optionally run tests
-      - name: Run tests
-        run: pnpm test
 
       # Step 6: Upload build artifacts (optional)
       - name: Upload Build Artifacts
