@@ -27,7 +27,7 @@ jobs:
       # Step 3: Install pnpm explicitly
       - name: Install pnpm
         run: |
-          npm install -g pnpm
+          corepack enable pnpm
           pnpm --version
 
       # Step 4: Install dependencies using pnpm
