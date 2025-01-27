@@ -1,5 +1,5 @@
-<script lang="ts">
-  interface Props {
+<script lang="ts" module>
+  export interface FormLabelProps {
     name?: string;
     label: string;
     error?: string;
@@ -7,7 +7,9 @@
     active?: boolean;
     class?: string;
   }
+</script>
 
+<script lang="ts">
   let {
     name,
     label,
@@ -15,9 +17,16 @@
     active = false,
     error,
     class: className = '',
-  }: Props = $props();
+  }: FormLabelProps = $props();
 </script>
 
 <label for={name} class:error class:active class:disabled class={`FormLabel ${className}`}>
   {label}
 </label>
+
+<style lang="scss">
+  .FormLabel {
+    display: block;
+    box-sizing: border-box;
+  }
+</style>

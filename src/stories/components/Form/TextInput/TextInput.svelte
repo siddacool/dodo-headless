@@ -1,8 +1,7 @@
-<script lang="ts">
-  import ErrorMessage from '../ErrorMessage/ErrorMessage.svelte';
-  import FormLabel from '../FormLabel/FormLabel.svelte';
+<script lang="ts" module>
+  import type { Snippet } from 'svelte';
 
-  interface Props {
+  export interface TextInputProps {
     title?: string;
     class?: string;
     type?: 'text' | 'email' | 'mobile' | 'number';
@@ -15,7 +14,14 @@
     error?: string;
     onchange?: (e: Event) => void;
     oninput?: (e: Event) => void;
+    before?: Snippet;
+    after?: Snippet;
   }
+</script>
+
+<script lang="ts">
+  import ErrorMessage from '../ErrorMessage/ErrorMessage.svelte';
+  import FormLabel from '../FormLabel/FormLabel.svelte';
 
   let {
     name,
@@ -29,7 +35,9 @@
     error,
     class: className = '',
     type = 'text',
-  }: Props = $props();
+    before,
+    after,
+  }: TextInputProps = $props();
 
   let active = $state(false);
 </script>
@@ -39,19 +47,31 @@
     <FormLabel {name} {error} {active} {disabled} {label} />
   {/if}
 
-  <input
-    {type}
-    {name}
-    {id}
-    {placeholder}
-    bind:value
-    {onchange}
-    {oninput}
-    {disabled}
-    onfocus={() => (active = true)}
-    onblur={() => (active = false)}
-    class:error
-  />
+  <div class="input-holder">
+    {#if before}
+      <div class="input-subordinate input-subordinate--before">
+        {@render before()}
+      </div>
+    {/if}
+    <input
+      {type}
+      {name}
+      {id}
+      {placeholder}
+      bind:value
+      {onchange}
+      {oninput}
+      {disabled}
+      onfocus={() => (active = true)}
+      onblur={() => (active = false)}
+      class:error
+    />
+    {#if after}
+      <div class="input-subordinate input-subordinate--after">
+        {@render after()}
+      </div>
+    {/if}
+  </div>
 
   {#if error && !disabled}
     <ErrorMessage message={error} />
@@ -59,4 +79,17 @@
 </div>
 
 <style lang="scss">
+  .TextInput {
+    display: flex;
+    flex-direction: column;
+
+    .input-holder {
+      flex: 1;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
 </style>

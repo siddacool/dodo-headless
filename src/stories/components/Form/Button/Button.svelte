@@ -1,12 +1,5 @@
 <script lang="ts" module>
-  export type ButtonVariant = 'default' | 'primary' | 'danger' | 'safe' | 'warning' | 'info';
-</script>
-
-<script lang="ts">
-  import type { Snippet } from 'svelte';
-
-  interface Props {
-    variant?: ButtonVariant;
+  export interface ButtonProps {
     disabled?: boolean;
     name?: string;
     title?: string;
@@ -15,9 +8,12 @@
     label?: Snippet | string;
     onclick?: (e: MouseEvent) => void;
   }
+</script>
+
+<script lang="ts">
+  import type { Snippet } from 'svelte';
 
   const {
-    variant = 'default',
     class: className = '',
     type = 'button',
     disabled = false,
@@ -25,17 +21,10 @@
     name,
     title,
     label,
-  }: Props = $props();
+  }: ButtonProps = $props();
 </script>
 
-<button
-  class={`Button variant variant--${variant} ${className}`}
-  {disabled}
-  {onclick}
-  {name}
-  {title}
-  {type}
->
+<button class={`Button ${className}`} {disabled} {onclick} {name} {title} {type}>
   {#if typeof label === 'function'}
     {@render label()}
   {:else}
@@ -44,4 +33,11 @@
 </button>
 
 <style lang="scss">
+  .Button {
+    background-color: transparent;
+    font-size: 1rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
 </style>
