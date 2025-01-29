@@ -14,6 +14,8 @@
     error?: string;
     onchange?: (e: Event) => void;
     oninput?: (e: Event) => void;
+    onblur?: () => void;
+    onfocus?: () => void;
     before?: Snippet;
     after?: Snippet;
   }
@@ -31,6 +33,8 @@
     value = $bindable<string>(),
     onchange,
     oninput,
+    onblur,
+    onfocus,
     disabled = false,
     error,
     class: className = '',
@@ -40,6 +44,22 @@
   }: TextInputProps = $props();
 
   let active = $state(false);
+
+  function onfocusEvent() {
+    if (onfocus) {
+      onfocus();
+    }
+
+    active = true;
+  }
+
+  function onblurEvent() {
+    if (onblur) {
+      onblur();
+    }
+
+    active = false;
+  }
 </script>
 
 <div class={`TextInput ${className}`}>
@@ -62,8 +82,8 @@
       {onchange}
       {oninput}
       {disabled}
-      onfocus={() => (active = true)}
-      onblur={() => (active = false)}
+      onfocus={onfocusEvent}
+      onblur={onblurEvent}
       class:error
     />
     {#if after}
