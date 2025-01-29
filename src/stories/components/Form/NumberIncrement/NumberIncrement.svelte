@@ -1,4 +1,6 @@
 <script lang="ts" module>
+  import type { Snippet } from 'svelte';
+
   export interface NumberIncrementProps {
     title?: string;
     class?: string;
@@ -20,12 +22,12 @@
     step?: number;
     decimals?: number;
     allowNegatives?: boolean;
+    labelAdd?: Snippet | string;
+    labelRemove?: Snippet | string;
   }
 </script>
 
 <script lang="ts">
-  import FormLabel from '../FormLabel/FormLabel.svelte';
-  import ErrorMessage from '../ErrorMessage/ErrorMessage.svelte';
   import { getValidNumericValue } from '../NumberInput/NumberInput.svelte';
 
   let {
@@ -48,6 +50,8 @@
     allowNegatives = false,
     min,
     max,
+    labelAdd = '+',
+    labelRemove = '-',
   }: NumberIncrementProps = $props();
 
   let active = $state(false);
@@ -121,6 +125,12 @@
 
     const newValue = value - step;
 
+    if (!allowNegatives && newValue < 0) {
+      value = 0;
+
+      return;
+    }
+
     value = getValidMinMaxValue(`${newValue}`);
   }
 
@@ -139,7 +149,9 @@
 
 <div class={`NumberIncrement ${className}`}>
   {#if label}
-    <FormLabel {name} {error} {active} {disabled} {label} />
+    <label for={name} class:error class:active class:disabled class="FormLabel">
+      {label}
+    </label>
   {/if}
 
   <div class="input-holder">
@@ -147,10 +159,14 @@
       <button
         class="Button Button-remove"
         disabled={disabled ||
-          ((min || min === 0) && (value || value === 0) && value < min ? true : false)}
+          ((min || min === 0) && (value || value === 0) && value <= min ? true : false)}
         onclick={remove}
       >
-        -
+        {#if typeof labelRemove === 'function'}
+          {@render labelRemove()}
+        {:else}
+          {labelRemove}
+        {/if}
       </button>
     </div>
     <input
@@ -170,16 +186,20 @@
       <button
         class="Button Button-add"
         disabled={disabled ||
-          ((max || max === 0) && (value || value === 0) && value > max ? true : false)}
+          ((max || max === 0) && (value || value === 0) && value >= max ? true : false)}
         onclick={add}
       >
-        +
+        {#if typeof labelAdd === 'function'}
+          {@render labelAdd()}
+        {:else}
+          {labelAdd}
+        {/if}
       </button>
     </div>
   </div>
 
-  {#if error && !disabled}
-    <ErrorMessage message={error} />
+  {#if error}
+    <p class="ErrorMessage">{error || ''}</p>
   {/if}
 </div>
 
@@ -205,6 +225,15 @@
         margin: 0;
       }
       flex: 1;
+    }
+
+    .FormLabel {
+      display: block;
+      box-sizing: border-box;
+    }
+
+    .ErrorMessage {
+      margin-bottom: 0;
     }
 
     .Button {

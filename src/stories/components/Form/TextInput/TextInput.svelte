@@ -22,9 +22,6 @@
 </script>
 
 <script lang="ts">
-  import ErrorMessage from '../ErrorMessage/ErrorMessage.svelte';
-  import FormLabel from '../FormLabel/FormLabel.svelte';
-
   let {
     name,
     id,
@@ -64,7 +61,9 @@
 
 <div class={`TextInput ${className}`}>
   {#if label}
-    <FormLabel {name} {error} {active} {disabled} {label} />
+    <label for={name} class:error class:active class:disabled class="FormLabel">
+      {label}
+    </label>
   {/if}
 
   <div class="input-holder">
@@ -93,8 +92,8 @@
     {/if}
   </div>
 
-  {#if error && !disabled}
-    <ErrorMessage message={error} />
+  {#if error}
+    <p class="ErrorMessage">{error || ''}</p>
   {/if}
 </div>
 
@@ -110,6 +109,15 @@
     input {
       width: 100%;
       box-sizing: border-box;
+    }
+
+    .FormLabel {
+      display: block;
+      box-sizing: border-box;
+    }
+
+    .ErrorMessage {
+      margin-bottom: 0;
     }
   }
 </style>
