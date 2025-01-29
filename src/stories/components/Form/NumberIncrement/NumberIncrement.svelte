@@ -24,6 +24,7 @@
     allowNegatives?: boolean;
     labelAdd?: Snippet | string;
     labelRemove?: Snippet | string;
+    readonly?: boolean;
   }
 </script>
 
@@ -52,6 +53,7 @@
     max,
     labelAdd = '+',
     labelRemove = '-',
+    readonly,
   }: NumberIncrementProps = $props();
 
   let active = $state(false);
@@ -154,7 +156,7 @@
     </label>
   {/if}
 
-  <div class="input-holder">
+  <div class="input-holder" class:error class:active class:disabled>
     <div class="input-subordinate input-subordinate--before">
       <button
         class="Button Button-remove"
@@ -181,6 +183,7 @@
       onfocus={onfocusEvent}
       onblur={onblurEvent}
       class:error
+      {readonly}
     />
     <div class="input-subordinate input-subordinate--after">
       <button
@@ -207,10 +210,12 @@
   .NumberIncrement {
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 
     .input-holder {
       flex: 1;
       display: flex;
+      box-sizing: border-box;
     }
 
     input {
@@ -225,6 +230,8 @@
         margin: 0;
       }
       flex: 1;
+      outline: 0;
+      border: 1px solid;
     }
 
     .FormLabel {
@@ -234,6 +241,7 @@
 
     .ErrorMessage {
       margin-bottom: 0;
+      box-sizing: border-box;
     }
 
     .Button {
@@ -242,9 +250,12 @@
       font-family: inherit;
       box-sizing: border-box;
       cursor: pointer;
+      border: 1px solid;
+      outline: 0;
     }
 
     .input-subordinate {
+      box-sizing: border-box;
       &--before {
         margin-right: 5px;
       }

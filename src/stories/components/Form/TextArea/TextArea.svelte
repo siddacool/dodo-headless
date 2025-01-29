@@ -1,14 +1,12 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte';
 
-  export interface TextInputProps {
+  export interface TextAreaProps {
     title?: string;
     class?: string;
-    type?: 'text' | 'email' | 'mobile' | 'number';
     name?: string;
     id?: string;
     label?: string;
-    placeholder?: string;
     value?: string;
     disabled?: boolean;
     error?: string;
@@ -20,6 +18,9 @@
     after?: Snippet;
     maxlength?: number;
     readonly?: boolean;
+    rows?: number;
+    cols?: number;
+    resize?: 'both' | 'vertical' | 'horizontal';
   }
 </script>
 
@@ -28,7 +29,6 @@
     name,
     id,
     label,
-    placeholder,
     value = $bindable<string>(),
     onchange,
     oninput,
@@ -37,12 +37,14 @@
     disabled = false,
     error,
     class: className = '',
-    type = 'text',
     before,
     after,
     maxlength,
     readonly,
-  }: TextInputProps = $props();
+    rows,
+    cols,
+    resize = 'both',
+  }: TextAreaProps = $props();
 
   let active = $state(false);
 
@@ -63,7 +65,7 @@
   }
 </script>
 
-<div class={`TextInput ${className}`}>
+<div class={`TextArea ${className}`}>
   {#if label}
     <label for={name} class:error class:active class:disabled class="FormLabel">
       {label}
@@ -76,12 +78,9 @@
         {@render before()}
       </div>
     {/if}
-    <input
-      {type}
+    <textarea
       {name}
       {id}
-      {placeholder}
-      bind:value
       {onchange}
       {oninput}
       {disabled}
@@ -90,7 +89,12 @@
       class:error
       {maxlength}
       {readonly}
-    />
+      {rows}
+      {cols}
+      class={`resize resize--${resize}`}
+    >
+      {value}
+    </textarea>
     {#if after}
       <div class="input-subordinate input-subordinate--after">
         {@render after()}
@@ -104,7 +108,7 @@
 </div>
 
 <style lang="scss">
-  .TextInput {
+  .TextArea {
     display: flex;
     flex-direction: column;
 
@@ -113,11 +117,25 @@
       border: 1px solid;
     }
 
-    input {
+    textarea {
       width: 100%;
       box-sizing: border-box;
       border: 0;
       outline: 0;
+
+      &.resize {
+        &--both {
+          resize: both;
+        }
+
+        &--vertical {
+          resize: vertical;
+        }
+
+        &--horizontal {
+          resize: horizontal;
+        }
+      }
     }
 
     .FormLabel {

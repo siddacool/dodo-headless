@@ -20,6 +20,7 @@
     decimals?: number;
     allowNegatives?: boolean;
     showControls?: boolean;
+    readonly?: boolean;
   }
 
   export function getValidNumericValue(value: string, allowNegatives: boolean, decimals: number) {
@@ -62,6 +63,7 @@
     decimals = 0,
     allowNegatives = false,
     showControls = false,
+    readonly,
   }: NumberInputProps = $props();
 
   let active = $state(false);
@@ -112,7 +114,7 @@
     </label>
   {/if}
 
-  <div class="input-holder">
+  <div class="input-holder" class:error class:active class:disabled>
     {#if before}
       <div class="input-subordinate input-subordinate--before">
         {@render before()}
@@ -130,6 +132,7 @@
       onfocus={onfocusEvent}
       onblur={onblurEvent}
       class:error
+      {readonly}
     />
     {#if after}
       <div class="input-subordinate input-subordinate--after">
@@ -150,11 +153,14 @@
 
     .input-holder {
       flex: 1;
+      border: 1px solid;
     }
 
     input {
       width: 100%;
       box-sizing: border-box;
+      border: 0;
+      outline: 0;
     }
 
     .FormLabel {
