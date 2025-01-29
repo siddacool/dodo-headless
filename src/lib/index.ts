@@ -23,3 +23,8 @@ export {
   default as TextArea,
   type TextAreaProps,
 } from '../stories/components/Form/TextArea/TextArea.svelte';
+
+export {
+  default as Select,
+  type SelectProps,
+} from '../stories/components/Form/Select/Select.svelte';

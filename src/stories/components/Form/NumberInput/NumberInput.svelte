@@ -154,6 +154,7 @@
     .input-holder {
       flex: 1;
       border: 1px solid;
+      display: flex;
     }
 
     input {
