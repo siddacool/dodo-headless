@@ -116,6 +116,8 @@
       flex: 1;
       border: 1px solid;
       display: flex;
+      overflow: hidden;
+      border-radius: 4px;
     }
 
     textarea {
@@ -123,6 +125,8 @@
       box-sizing: border-box;
       border: 0;
       outline: 0;
+      padding: 8px;
+      font-size: 1rem;
 
       &.resize {
         &--both {
@@ -142,6 +146,7 @@
     .FormLabel {
       display: block;
       box-sizing: border-box;
+      margin-bottom: 5px;
     }
 
     .ErrorMessage {

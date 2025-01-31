@@ -155,6 +155,8 @@
       flex: 1;
       border: 1px solid;
       display: flex;
+      overflow: hidden;
+      border-radius: 4px;
     }
 
     input {
@@ -162,11 +164,15 @@
       box-sizing: border-box;
       border: 0;
       outline: 0;
+      font-size: 1rem;
+      height: 35px;
+      padding: 0 8px;
     }
 
     .FormLabel {
       display: block;
       box-sizing: border-box;
+      margin-bottom: 5px;
     }
 
     .ErrorMessage {

@@ -231,12 +231,17 @@
       }
       flex: 1;
       outline: 0;
+      font-size: 1rem;
       border: 1px solid;
+      height: 35px;
+      padding: 0 8px;
+      border-radius: 4px;
     }
 
     .FormLabel {
       display: block;
       box-sizing: border-box;
+      margin-bottom: 5px;
     }
 
     .ErrorMessage {
@@ -252,6 +257,9 @@
       cursor: pointer;
       border: 1px solid;
       outline: 0;
+      height: 35px;
+      border-radius: 4px;
+      padding: 0 12px;
     }
 
     .input-subordinate {

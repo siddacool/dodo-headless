@@ -86,6 +86,10 @@
     outline: 0;
     text-decoration: none;
     color: inherit;
-    padding: 0;
+    height: 35px;
+    padding: 0 12px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
   }
 </style>

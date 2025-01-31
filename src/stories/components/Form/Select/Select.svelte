@@ -227,6 +227,8 @@
       border: 1px solid;
       box-sizing: border-box;
       display: flex;
+      overflow: hidden;
+      border-radius: 4px;
     }
 
     input {
@@ -236,6 +238,8 @@
       outline: 0;
       height: 100%;
       flex: 1;
+      font-size: 1rem;
+      padding: 0 8px;
     }
 
     .FormLabel {
@@ -259,6 +263,7 @@
       display: flex;
       flex-direction: column;
       flex: 1;
+      height: 35px;
     }
 
     .clickable {
@@ -276,6 +281,8 @@
       outline: 0;
       box-sizing: border-box;
       align-items: center;
+      font-size: 1rem;
+      padding: 0 8px;
     }
 
     .select-options {
@@ -286,8 +293,10 @@
       border: 1px solid;
       position: absolute;
       width: 100%;
-      top: 30px;
+      top: 50px;
       box-sizing: border-box;
+      border-radius: 4px;
+      overflow: hidden;
     }
 
     .select-option {
@@ -295,6 +304,10 @@
       padding: 0;
       display: flex;
       border-bottom: 1px solid;
+      height: 30px;
+      padding: 0 8px;
+      display: flex;
+      align-items: center;
 
       &:last-child {
         border-bottom: 0;
@@ -302,6 +315,7 @@
     }
 
     .input-subordinate {
+      display: flex;
       &--after {
         &:empty {
           display: none;
@@ -315,7 +329,7 @@
       font-family: inherit;
       box-sizing: border-box;
       cursor: pointer;
-      border: 1px solid;
+      border: 0;
       outline: 0;
       text-decoration: none;
       color: inherit;
